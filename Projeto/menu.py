@@ -1,8 +1,9 @@
 from time import sleep
+from colorama import Fore
 
-print('-=' * 30)
-print(f'{'BILHETERIA VIRTUAL': >37}')
-print('-=' * 30)
+print(Fore.MAGENTA + '-=' * 30)
+print( f'{'BILHETERIA VIRTUAL': >37}')
+print('-=' * 30 + Fore.RESET)
 print('Se for sua primeira vez aqui, seja muito bem-vindo! Faça o seu cadastro antes de tudo.')
 
 dados = {}
@@ -72,6 +73,25 @@ def validar_email(prompt):
             print('Erro: esse não é um e-mail válido. Tente novamente!')
 
 
+def analise_idades(dado):
+    maior_idade = menor_idade = 0
+    if dado == {}:
+        print('Ainda não foram realizados os cadastros!')
+    else:
+        for n, i in dado.items():
+            if i['Idade'] < 18:
+                menor_idade += 1
+            elif i['Idade'] >= 18:
+                maior_idade += 1
+        por_maior = (maior_idade / len(dado.keys())) * 100
+        por_menor = (menor_idade / len(dado.keys())) * 100
+
+        print(f'  - Porcentagem de pessoas', Fore.GREEN + 'maiores de idade',
+              Fore.RESET + f'cadastradas: {por_maior:.1f} %')
+        print(f'  - Porcentagem de pessoas', Fore.GREEN + 'menores de idade',
+              Fore.RESET + f'cadastradas: {por_menor:.1f} %')
+
+
 def cadastro():
     while True:
         nome = validar_nome('Nome completo: ')
@@ -111,7 +131,8 @@ def login(data):
 
 
 while True:
-    print('CADASTRO [1] / LOGIN [2] / ESTATÍSTICAS [3]/ SAIR [4]')
+    print(Fore.MAGENTA + '-' * 40)
+    print('CADASTRO [1] / LOGIN [2] / ESTATÍSTICAS [3]/ SAIR [4]' + Fore.RESET)
     op = int(input('O que deseja fazer?  '))
     match op:
         case 1:
@@ -119,34 +140,36 @@ while True:
         case 2:
             if login(dados):
                 print('Login realizado com sucesso!')
-                print('-='*30)
+                print(Fore.MAGENTA + '-='*30)
                 while True:
-                    print('INFORMAÇÕES DE CADASTRO [1] / COMPRAR [2] / BILHETES ADQUIRIDOS [3] / SAIR [4]')
+                    print('INFORMAÇÕES DE CADASTRO [1] / COMPRAR [2] / '
+                          'BILHETES ADQUIRIDOS [3] / VOLTAR [4]' + Fore.RESET)
                     op_logado = int(input('O que deseja fazer?  '))
                     match op_logado:
                         case 1:
-                            print('-' * 30)
-                            print(f'{'INFORMAÇÕES DE CADASTRO': >27}')
+                            print(Fore.MAGENTA + '-' * 30)
+                            print(f'{'INFORMAÇÕES DE CADASTRO': >27}' + Fore.RESET)
                             for dd in dados[nome_login]:
                                 print(f'{dd}: {dados[nome_login][dd]}')
                         case 2:
-                            print('-' * 30)
-                            print(f'{'COMPRE SEU BILHETE': >24}')
+                            print(Fore.MAGENTA + '-' * 30)
+                            print(f'{'COMPRE SEU BILHETE': >24}' + Fore.RESET)
                         case 3:
-                            print('-' * 30)
-                            print(f'{'SEUS BILHETES': >20}')
+                            print(Fore.MAGENTA + '-' * 30)
+                            print(f'{'SEUS BILHETES': >20}' + Fore.RESET)
                         case 4:
-                            print('-' * 30)
+                            print(Fore.MAGENTA + '-' * 30 + Fore.RESET)
                             break
             else:
                 print('Falha no login!')
         case 3:
-            print('-'*30)
+            print(Fore.MAGENTA + '-'*30)
             print(f'{'DADOS DE TODOS OS CADASTROS'}')
-            print('-' * 30)
+            print('-' * 30 + Fore.RESET)
+            analise_idades(dados)
         case 4:
-            print('-'*40)
-            print('SAINDO...')
+            print(Fore.MAGENTA + '-'*40)
+            print('SAINDO...' + Fore.RESET)
             sleep(1.5)
             break
 print('Finalizado. Volte sempre à Bilheteria Virtual!')
