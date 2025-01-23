@@ -2,7 +2,7 @@ from time import sleep
 from colorama import Fore
 
 print(Fore.MAGENTA + '-=' * 30)
-print( f'{'BILHETERIA VIRTUAL': >37}')
+print(f'{'BILHETERIA VIRTUAL': >37}')
 print('-=' * 30 + Fore.RESET)
 print('Se for sua primeira vez aqui, seja muito bem-vindo! Faça o seu cadastro antes de tudo.')
 
@@ -75,21 +75,53 @@ def validar_email(prompt):
 
 def analise_idades(dado):
     maior_idade = menor_idade = 0
-    if dado == {}:
-        print('Ainda não foram realizados os cadastros!')
-    else:
-        for n, i in dado.items():
-            if i['Idade'] < 18:
-                menor_idade += 1
-            elif i['Idade'] >= 18:
-                maior_idade += 1
-        por_maior = (maior_idade / len(dado.keys())) * 100
-        por_menor = (menor_idade / len(dado.keys())) * 100
+    maior = menor = cont = 0
+    for n, i in dado.items():
+        if i['Idade'] < 18:
+            menor_idade += 1
+        elif i['Idade'] >= 18:
+            maior_idade += 1
+        if cont == 0:
+            maior = menor = i['Idade']
+        else:
+            if i['Idade'] > maior:
+                maior = i['Idade']
+            if i['Idade'] < menor:
+                menor = i['Idade']
+        cont += 1
 
-        print(f'  - Porcentagem de pessoas', Fore.GREEN + 'maiores de idade',
-              Fore.RESET + f'cadastradas: {por_maior:.1f} %')
-        print(f'  - Porcentagem de pessoas', Fore.GREEN + 'menores de idade',
-              Fore.RESET + f'cadastradas: {por_menor:.1f} %')
+    por_maior = (maior_idade / len(dado.keys())) * 100
+    por_menor = (menor_idade / len(dado.keys())) * 100
+
+    print(f'  - Porcentagem de pessoas', Fore.GREEN + 'menores de idade', Fore.RESET + f'cadastradas:',
+          Fore.GREEN + f'{por_menor:.1f} %')
+    print(Fore.RESET + '  - Porcentagem de pessoas', Fore.GREEN + 'maiores de idade', Fore.RESET + 'cadastradas:',
+          Fore.GREEN + f'{por_maior:.1f} %')
+    print(Fore.RESET + '  - A ', Fore.GREEN + 'menor ', Fore.RESET + 'idade cadastrada foi: ',
+          Fore.GREEN + f'{menor}')
+    print(Fore.RESET + '  - A ', Fore.GREEN + 'maior ',
+          Fore.RESET + 'idade cadastrada foi: ', Fore.GREEN + f'{maior}')
+
+
+def analise_genero(dado):
+    feminino = masculino = outro = 0
+    for n, i in dado.items():
+        if i['Genero'] == 'F':
+            feminino += 1
+        elif i['Genero'] == 'M':
+            masculino += 1
+        else:
+            outro += 1
+    porc_fem = (feminino / len(dado.keys())) * 100
+    porc_masc = (masculino / len(dado.keys())) * 100
+    porc_out = (outro / len(dado.keys())) * 100
+
+    print('   - Porcentagem de pessoas do gênero', Fore.GREEN + 'feminino', Fore.RESET + 'cadastradas:',
+          Fore.GREEN + f'{porc_fem:.1f} %')
+    print(Fore.RESET + '   - Porcentagem de pessoas do gênero', Fore.GREEN + 'masculino', Fore.RESET + 'cadastradas:',
+          Fore.GREEN + f'{porc_masc:.1f} %')
+    print(Fore.RESET + '   - Porcentagem de pessoas do gênero', Fore.GREEN + 'outro', Fore.RESET + 'cadastradas:',
+          Fore.GREEN + f'{porc_out:.1f} %')
 
 
 def cadastro():
@@ -166,7 +198,13 @@ while True:
             print(Fore.MAGENTA + '-'*30)
             print(f'{'DADOS DE TODOS OS CADASTROS'}')
             print('-' * 30 + Fore.RESET)
-            analise_idades(dados)
+            if dados == {}:
+                print('Ainda não foram realizados os cadastros!')
+            else:
+                print('-'*10, 'IDADES', '-'*10)
+                analise_idades(dados)
+                print(Fore.RESET + '-' * 10, 'GÊNEROS', '-' * 10)
+                analise_genero(dados)
         case 4:
             print(Fore.MAGENTA + '-'*40)
             print('SAINDO...' + Fore.RESET)
