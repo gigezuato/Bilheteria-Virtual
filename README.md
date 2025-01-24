@@ -4,7 +4,7 @@
 * Dicionários
 * Listas
 * Estruturas condicionais: if, elif e else
-* Estrutura de repetição: while
+* Estrutura de repetição: while e for
 * Estrutura match/case
 * Funções
 * Bibliotecas
