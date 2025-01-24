@@ -124,6 +124,41 @@ def analise_genero(dado):
           Fore.GREEN + f'{porc_out:.1f} %')
 
 
+def analise_idade_generos(dado):
+    fem_maior = masc_maior = fem_menor = masc_menor = 0
+    cont_fem = cont_masc = 0
+    for n, i in dado.items():
+        if i['Genero'] == 'F':
+            cont_fem += 1
+        elif i['Genero'] == 'M':
+            cont_masc += 1
+
+    for n, i in dado.items():
+        if i['Genero'] == 'F' and i['Idade'] >= 18:
+            fem_maior += 1
+        elif i['Genero'] == 'F' and i['Idade'] < 18:
+            fem_menor += 1
+        if i['Genero'] == 'M' and i['Idade'] >= 18:
+            masc_maior += 1
+        elif i['Genero'] == 'M' and i['Idade'] < 18:
+            masc_menor += 1
+
+    porc_fem_maior = (fem_maior / cont_fem) * 100
+    porc_fem_menor = (fem_menor / cont_fem) * 100
+    porc_masc_maior = (masc_maior / cont_masc) * 100
+    porc_masc_menor = (masc_menor / cont_masc) * 100
+
+    print('   - Porcentagem de pessoas do gênero', Fore.GREEN + 'feminino maiores de idade',
+          Fore.RESET + 'cadastradas:',
+          Fore.GREEN + f'{porc_fem_maior:.2f} %')
+    print(Fore.RESET + '   - Porcentagem de pessoas do gênero', Fore.GREEN + 'feminino menores de idade', Fore.RESET +
+          'cadastradas:', Fore.GREEN + f'{porc_fem_menor:.2f} %')
+    print(Fore.RESET + '   - Porcentagem de pessoas do gênero', Fore.GREEN + 'masculino maiores de idade', Fore.RESET +
+          'cadastradas:', Fore.GREEN + f'{porc_masc_maior:.2f} %')
+    print(Fore.RESET + '   - Porcentagem de pessoas do gênero', Fore.GREEN + 'masculino menores de idade', Fore.RESET +
+          'cadastradas:', Fore.GREEN + f'{porc_masc_menor:.2f} %')
+
+
 def cadastro():
     while True:
         nome = validar_nome('Nome completo: ')
@@ -164,7 +199,7 @@ def login(data):
 
 while True:
     print(Fore.MAGENTA + '-' * 40)
-    print('CADASTRO [1] / LOGIN [2] / ESTATÍSTICAS [3]/ SAIR [4]' + Fore.RESET)
+    print('CADASTRO [1] / LOGIN [2] / ESTATÍSTICAS [3] / SAIR [4]' + Fore.RESET)
     op = int(input('O que deseja fazer?  '))
     match op:
         case 1:
@@ -201,10 +236,14 @@ while True:
             if dados == {}:
                 print('Ainda não foram realizados os cadastros!')
             else:
+                print('-' * 10, 'DADOS GERAIS', '-' * 10)
+                print('   - Foram cadastradas ao todo', Fore.GREEN + f'{len(dados)}', Fore.RESET + 'pessoas.')
                 print('-'*10, 'IDADES', '-'*10)
                 analise_idades(dados)
                 print(Fore.RESET + '-' * 10, 'GÊNEROS', '-' * 10)
                 analise_genero(dados)
+                print(Fore.RESET + '-' * 10, 'IDADES + GÊNEROS', '-' * 10)
+                analise_idade_generos(dados)
         case 4:
             print(Fore.MAGENTA + '-'*40)
             print('SAINDO...' + Fore.RESET)
