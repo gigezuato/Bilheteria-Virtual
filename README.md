@@ -16,6 +16,6 @@ O cadastro é constituído de funções que fazem as verificações dos dados de
 
 Assim que o login for realizado com sucesso, são apresentadas mais opções como: visualizar as informações de cadastro, comprar o bilhete, verificar os bilhetes já adquiridos e voltar para o menu principal.
 
-Atualmente, estou trabalhando em cada opção exibida após o login. 
+Atualmente, estou trabalhando na parte das estatísticas, além de estar pesquisando sobre modularização para aplicar aqui. 
 
 Conforme meu aprendizado evoluir, o programa será atualizado! 😊
