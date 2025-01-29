@@ -4,11 +4,11 @@
 * Dicionários
 * Listas
 * Estruturas condicionais: if, elif e else
-* Estrutura de repetição: while e for
+* Estruturas de repetição: while e for
 * Estrutura match/case
 * Funções
-* Bibliotecas
 * Métodos de string
+* Pacotes e módulos
 ---
 A bilheteria virtual conta com um menu principal, em que o usuário tem as opções de: realizar cadastros, realizar o login, analisar as estatísticas dos cadastros e sair.
 
