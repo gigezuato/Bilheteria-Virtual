@@ -1,165 +1,27 @@
+from funcionalidades.verificações import *
+from funcionalidades.análises import *
 from time import sleep
 from colorama import Fore
+
 
 print(Fore.MAGENTA + '-=' * 30)
 print(f'{'BILHETERIA VIRTUAL': >37}')
 print('-=' * 30 + Fore.RESET)
 print('Se for sua primeira vez aqui, seja muito bem-vindo! Faça o seu cadastro antes de tudo.')
 
+
 dados = {}
 nome_login = ''
 
 
-def limitar_caracteres(prompt, tamanho):
-    while True:
-        texto = str(input(prompt)).strip().split()
-        texto_sem_espacos = ''.join(texto)
-        if len(texto_sem_espacos) == tamanho:
-            return texto_sem_espacos
-        else:
-            print(f'Erro: Você digitou {len(texto_sem_espacos)} caracteres. O texto deve ter {tamanho} caracteres. '
-                  f'Tente novamente! ')
-
-
-def validar_nome(prompt):
-    while True:
-        nome = str(input(prompt)).strip().upper()
-        nome_divisao = nome.split()
-        if len(nome) > 2 and len(nome_divisao) > 1:
-            return nome
-        else:
-            print('Erro: nome não válido. Certifique-se de colocar nome e sobrenome!')
-
-
-def validar_idade(prompt):
-    while True:
-        idade = int(input(prompt))
-        if idade > 0:
-            return idade
-        else:
-            print(f'Erro: Você digitou {idade}. A idade deve ser um valor positivo. Tente novamente! ')
-
-
-def validar_genero(prompt):
-    while True:
-        genero = str(input(prompt)).upper().strip()[0]
-        if genero in 'FMO':
-            return genero
-        else:
-            print(f'Erro: Opção inválida! Você digitou {genero} e as opções são: '
-                  f'Feminino [F] / Masculino [M] / Outro [O]. Tente novamente!')
-
-
-def validar_estado(prompt):
-    estados_brasileiros = {'Norte': ['AC', 'AP', 'AM', 'PA', 'RO', 'RR', 'TO'],
-                           'Nordeste': ['AL', 'BA', 'CE', 'MA', 'PB', 'PE', 'PI', 'RN', 'SE'],
-                           'Centro-oeste': ['DF', 'GO', 'MT', 'MS'], 'Sudeste': ['ES', 'MG', 'RJ', 'SP'],
-                           'Sul': ['PR', 'RS', 'SC']}
-    while True:
-        estado = str(input(prompt)).strip().upper()
-        for regiao, siglas in estados_brasileiros.items():
-            if estado in siglas:
-                return estado
-
-        print(f'Erro: o estado {estado} não existe. Tente novamente!')
-
-
-def validar_email(prompt):
-    while True:
-        email = str(input(prompt)).strip()
-        if '@' and '.' in email:
-            return email
-        else:
-            print('Erro: esse não é um e-mail válido. Tente novamente!')
-
-
-def analise_idades(dado):
-    maior_idade = menor_idade = 0
-    maior = menor = cont = 0
-    for n, i in dado.items():
-        if i['Idade'] < 18:
-            menor_idade += 1
-        elif i['Idade'] >= 18:
-            maior_idade += 1
-        if cont == 0:
-            maior = menor = i['Idade']
-        else:
-            if i['Idade'] > maior:
-                maior = i['Idade']
-            if i['Idade'] < menor:
-                menor = i['Idade']
-        cont += 1
-
-    por_maior = (maior_idade / len(dado.keys())) * 100
-    por_menor = (menor_idade / len(dado.keys())) * 100
-
-    print(f'  - Porcentagem de pessoas', Fore.GREEN + 'menores de idade', Fore.RESET + f'cadastradas:',
-          Fore.GREEN + f'{por_menor:.1f} %')
-    print(Fore.RESET + '  - Porcentagem de pessoas', Fore.GREEN + 'maiores de idade', Fore.RESET + 'cadastradas:',
-          Fore.GREEN + f'{por_maior:.1f} %')
-    print(Fore.RESET + '  - A ', Fore.GREEN + 'menor ', Fore.RESET + 'idade cadastrada foi: ',
-          Fore.GREEN + f'{menor}')
-    print(Fore.RESET + '  - A ', Fore.GREEN + 'maior ',
-          Fore.RESET + 'idade cadastrada foi: ', Fore.GREEN + f'{maior}')
-
-
-def analise_genero(dado):
-    feminino = masculino = outro = 0
-    for n, i in dado.items():
-        if i['Genero'] == 'F':
-            feminino += 1
-        elif i['Genero'] == 'M':
-            masculino += 1
-        else:
-            outro += 1
-    porc_fem = (feminino / len(dado.keys())) * 100
-    porc_masc = (masculino / len(dado.keys())) * 100
-    porc_out = (outro / len(dado.keys())) * 100
-
-    print('   - Porcentagem de pessoas do gênero', Fore.GREEN + 'feminino', Fore.RESET + 'cadastradas:',
-          Fore.GREEN + f'{porc_fem:.1f} %')
-    print(Fore.RESET + '   - Porcentagem de pessoas do gênero', Fore.GREEN + 'masculino', Fore.RESET + 'cadastradas:',
-          Fore.GREEN + f'{porc_masc:.1f} %')
-    print(Fore.RESET + '   - Porcentagem de pessoas do gênero', Fore.GREEN + 'outro', Fore.RESET + 'cadastradas:',
-          Fore.GREEN + f'{porc_out:.1f} %')
-
-
-def analise_idade_generos(dado):
-    fem_maior = masc_maior = fem_menor = masc_menor = 0
-    cont_fem = cont_masc = 0
-    for n, i in dado.items():
-        if i['Genero'] == 'F':
-            cont_fem += 1
-        elif i['Genero'] == 'M':
-            cont_masc += 1
-
-    for n, i in dado.items():
-        if i['Genero'] == 'F' and i['Idade'] >= 18:
-            fem_maior += 1
-        elif i['Genero'] == 'F' and i['Idade'] < 18:
-            fem_menor += 1
-        if i['Genero'] == 'M' and i['Idade'] >= 18:
-            masc_maior += 1
-        elif i['Genero'] == 'M' and i['Idade'] < 18:
-            masc_menor += 1
-
-    porc_fem_maior = (fem_maior / cont_fem) * 100
-    porc_fem_menor = (fem_menor / cont_fem) * 100
-    porc_masc_maior = (masc_maior / cont_masc) * 100
-    porc_masc_menor = (masc_menor / cont_masc) * 100
-
-    print('   - Porcentagem de pessoas do gênero', Fore.GREEN + 'feminino maiores de idade',
-          Fore.RESET + 'cadastradas:',
-          Fore.GREEN + f'{porc_fem_maior:.2f} %')
-    print(Fore.RESET + '   - Porcentagem de pessoas do gênero', Fore.GREEN + 'feminino menores de idade', Fore.RESET +
-          'cadastradas:', Fore.GREEN + f'{porc_fem_menor:.2f} %')
-    print(Fore.RESET + '   - Porcentagem de pessoas do gênero', Fore.GREEN + 'masculino maiores de idade', Fore.RESET +
-          'cadastradas:', Fore.GREEN + f'{porc_masc_maior:.2f} %')
-    print(Fore.RESET + '   - Porcentagem de pessoas do gênero', Fore.GREEN + 'masculino menores de idade', Fore.RESET +
-          'cadastradas:', Fore.GREEN + f'{porc_masc_menor:.2f} %')
-
-
 def cadastro():
+    """
+        => Realiza os cadastros a partir de entradas como: nome, senha, idade, gênero, estado, celular e email.
+        => As informações são registradas em dicionários. No dicionário principal cada nome é uma chave, assim, cada
+        nome possui seu próprio dicionário em que as chaves são os tipos de entradas (idade, estado, ...)
+        e os itens são as informações (19, SP, ...).
+    :return: as informações são adicionadas no dicionário dados
+    """
     while True:
         nome = validar_nome('Nome completo: ')
         senha = limitar_caracteres('Senha (precisa ter 8 caracteres): ', 8)
@@ -185,6 +47,11 @@ def cadastro():
 
 
 def login(data):
+    """
+        => Realiza o login a partir do nome completo cadastrado e respectiva senha.
+    :param data: dicionário com as informações de cadastros
+    :return: valor booleano indicando se o login foi realizado ou falhou
+    """
     realizado = False
     global nome_login
     nome_login = str(input('Nome completo: ')).strip().upper()
