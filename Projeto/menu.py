@@ -1,12 +1,11 @@
+from funcionalidades.interface import *
 from funcionalidades.verificações import *
 from funcionalidades.análises import *
 from time import sleep
 from colorama import Fore
 
 
-print(Fore.MAGENTA + '-=' * 30)
-print(f'{'BILHETERIA VIRTUAL': >37}')
-print('-=' * 30 + Fore.RESET)
+titulo('BILHETERIA VIRTUAL', 30, '-=', roxo)
 print('Se for sua primeira vez aqui, seja muito bem-vindo! Faça o seu cadastro antes de tudo.')
 
 
@@ -22,6 +21,7 @@ def cadastro():
         e os itens são as informações (19, SP, ...).
     :return: as informações são adicionadas no dicionário dados
     """
+    titulo('CADASTRO', 30, '-', verde)
     while True:
         nome = validar_nome('Nome completo: ')
         senha = limitar_caracteres('Senha (precisa ter 8 caracteres): ', 8)
@@ -40,7 +40,7 @@ def cadastro():
             'Email': email
         }
 
-        resp = str(input('Realizar mais cadastros? [S/N] ')).upper().strip()[0]
+        resp = str(input('>> Realizar mais cadastros? [S/N] ')).upper().strip()[0]
         if resp == 'N':
             print('Cadastro(s) finalizado(s)!')
             break
@@ -52,6 +52,7 @@ def login(data):
     :param data: dicionário com as informações de cadastros
     :return: valor booleano indicando se o login foi realizado ou falhou
     """
+    titulo('LOGIN', 30, '-', verde)
     realizado = False
     global nome_login
     nome_login = str(input('Nome completo: ')).strip().upper()
@@ -65,41 +66,39 @@ def login(data):
 
 
 while True:
-    print(Fore.MAGENTA + '-' * 40)
-    print('CADASTRO [1] / LOGIN [2] / ESTATÍSTICAS [3] / SAIR [4]' + Fore.RESET)
-    op = int(input('O que deseja fazer?  '))
+    titulo('CADASTRO [1] / LOGIN [2] / ESTATÍSTICAS [3] / SAIR [4]', 60, '-', roxo, False)
+    op = int(input('>> O que deseja fazer?  '))
+    if op not in range(1, 5):
+        print('Opção inválida!')
+        continue
     match op:
         case 1:
             cadastro()
         case 2:
             if login(dados):
-                print('Login realizado com sucesso!')
-                print(Fore.MAGENTA + '-='*30)
+                print(f'\033[{azul}mLogin realizado com sucesso!\033[m')
                 while True:
-                    print('INFORMAÇÕES DE CADASTRO [1] / COMPRAR [2] / '
-                          'BILHETES ADQUIRIDOS [3] / VOLTAR [4]' + Fore.RESET)
-                    op_logado = int(input('O que deseja fazer?  '))
+                    titulo('INFORMAÇÕES DE CADASTRO [1] / COMPRAR [2] / BILHETES ADQUIRIDOS [3] / VOLTAR [4]', 60,
+                           '-', roxo, False)
+                    op_logado = int(input('>> O que deseja fazer?  '))
+                    if op_logado not in range(1, 5):
+                        print('Opção inválida!')
+                        continue
                     match op_logado:
                         case 1:
-                            print(Fore.MAGENTA + '-' * 30)
-                            print(f'{'INFORMAÇÕES DE CADASTRO': >27}' + Fore.RESET)
+                            titulo('INFORMAÇÕES DE CADASTRO', 30, '-', verde)
                             for dd in dados[nome_login]:
                                 print(f'{dd}: {dados[nome_login][dd]}')
                         case 2:
-                            print(Fore.MAGENTA + '-' * 30)
-                            print(f'{'COMPRE SEU BILHETE': >24}' + Fore.RESET)
+                            titulo('COMPRE SEU BILHETE', 30, '-', verde)
                         case 3:
-                            print(Fore.MAGENTA + '-' * 30)
-                            print(f'{'SEUS BILHETES': >20}' + Fore.RESET)
+                            titulo('SEUS BILHETES', 30, '-', verde)
                         case 4:
-                            print(Fore.MAGENTA + '-' * 30 + Fore.RESET)
                             break
             else:
                 print('Falha no login!')
         case 3:
-            print(Fore.MAGENTA + '-'*30)
-            print(f'{'DADOS DE TODOS OS CADASTROS'}')
-            print('-' * 30 + Fore.RESET)
+            titulo('DADOS DE TODOS OS CADASTROS', 30, '-', verde)
             if dados == {}:
                 print('Ainda não foram realizados os cadastros!')
             else:
@@ -112,8 +111,7 @@ while True:
                 print(Fore.RESET + '-' * 10, 'IDADES + GÊNEROS', '-' * 10)
                 analise_idade_generos(dados)
         case 4:
-            print(Fore.MAGENTA + '-'*40)
-            print('SAINDO...' + Fore.RESET)
+            titulo('SAINDO...', 30, '-', roxo, False)
             sleep(1.5)
             break
-print('Finalizado. Volte sempre à Bilheteria Virtual!')
+titulo('Volte sempre à Bilheteria Virtual!', 30, '-=', roxo)

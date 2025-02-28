@@ -10,7 +10,9 @@ preto = '30'
 cinza = '37'
 
 
-def titulo(msg, tam=42, simbolo='-', cor=vermelho):
+def titulo(msg, tam=42, simbolo='-', cor=vermelho, dupla_linha = True):
     print(f'\033[{cor}m{simbolo}\033[m' * tam)
     print(f'\033[{cor}m{msg.center(tam * len(simbolo))}\033[m')
-    print(f'\033[{cor}m{simbolo}\033[m' * tam)
+    if dupla_linha:
+        print(f'\033[{cor}m{simbolo}\033[m' * tam)
+
