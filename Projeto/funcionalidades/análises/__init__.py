@@ -87,17 +87,22 @@ def analise_idade_generos(dado):
             masc_maior += 1
         elif i['Genero'] == 'M' and i['Idade'] < 18:
             masc_menor += 1
-    # Tratar o erro de quando não houver cadastros pessoas de um gênero e, por isso a divisão ser um divisão por 0.
-    porc_fem_maior = (fem_maior / cont_fem) * 100
-    porc_fem_menor = (fem_menor / cont_fem) * 100
-    porc_masc_maior = (masc_maior / cont_masc) * 100
-    porc_masc_menor = (masc_menor / cont_masc) * 100
+    if cont_fem != 0:
+        porc_fem_maior = (fem_maior / cont_fem) * 100
+        porc_fem_menor = (fem_menor / cont_fem) * 100
+        print('   - Porcentagem de pessoas do gênero', f'\033[{verde}mfeminino maiores de idade\033[m',
+              'cadastradas:', f'\033[{verde}m{porc_fem_maior:.2f} %\033[m')
+        print('   - Porcentagem de pessoas do gênero', f'\033[{verde}mfeminino menores de idade\033[m',
+              'cadastradas:', f'\033[{verde}m{porc_fem_menor:.2f} %\033[m')
+    else:
+        print('   - Não foram cadastradas pessoas do gênero feminino.')
 
-    print('   - Porcentagem de pessoas do gênero', f'\033[{verde}mfeminino maiores de idade\033[m',
-          'cadastradas:', f'\033[{verde}m{porc_fem_maior:.2f} %\033[m')
-    print('   - Porcentagem de pessoas do gênero', f'\033[{verde}mfeminino menores de idade\033[m',
-          'cadastradas:', f'\033[{verde}m{porc_fem_menor:.2f} %\033[m')
-    print('   - Porcentagem de pessoas do gênero', f'\033[{verde}m masculino maiores de idade\033[m',
-          'cadastradas:', f'\033[{verde}m{porc_masc_maior:.2f} %\033[m')
-    print('   - Porcentagem de pessoas do gênero', f'\033[{verde}m masculino menores de idade\033[m',
-          'cadastradas:', f'\033[{verde}m{porc_masc_menor:.2f} %\033[m')
+    if cont_masc != 0:
+        porc_masc_maior = (masc_maior / cont_masc) * 100
+        porc_masc_menor = (masc_menor / cont_masc) * 100
+        print('   - Porcentagem de pessoas do gênero', f'\033[{verde}m masculino maiores de idade\033[m',
+              'cadastradas:', f'\033[{verde}m{porc_masc_maior:.2f} %\033[m')
+        print('   - Porcentagem de pessoas do gênero', f'\033[{verde}m masculino menores de idade\033[m',
+              'cadastradas:', f'\033[{verde}m{porc_masc_menor:.2f} %\033[m')
+    else:
+        print('   - Não foram cadastradas pessoas do gênero masculino.')
