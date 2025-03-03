@@ -55,6 +55,9 @@ def login(data):
     titulo('LOGIN', 30, '-', verde)
     realizado = False
     global nome_login
+    if data == {}:
+        print('Ainda não foram realizados cadastros!')
+        return
     nome_login = str(input('Nome completo: ')).strip().upper()
     senha_login = str(input('Senha: ')).strip()
 
@@ -69,7 +72,7 @@ while True:
     titulo('CADASTRO [1] / LOGIN [2] / ESTATÍSTICAS [3] / SAIR [4]', 60, '-', roxo, False)
     op = int(input('>> O que deseja fazer?  '))
     if op not in range(1, 5):
-        print('Opção inválida!')
+        print(f'\033[{vermelho}mOpção inválida!\033[m')
         continue
     match op:
         case 1:
@@ -82,7 +85,7 @@ while True:
                            '-', roxo, False)
                     op_logado = int(input('>> O que deseja fazer?  '))
                     if op_logado not in range(1, 5):
-                        print('Opção inválida!')
+                        print(f'\033[{vermelho}mOpção inválida!\033[m')
                         continue
                     match op_logado:
                         case 1:
@@ -96,19 +99,19 @@ while True:
                         case 4:
                             break
             else:
-                print('Falha no login!')
+                print(f'\033[{vermelho}mFalha no login!\033[m')
         case 3:
             titulo('DADOS DE TODOS OS CADASTROS', 30, '-', verde)
             if dados == {}:
                 print('Ainda não foram realizados os cadastros!')
             else:
                 print('-' * 10, 'DADOS GERAIS', '-' * 10)
-                print('   - Foram cadastradas ao todo', Fore.GREEN + f'{len(dados)}', Fore.RESET + 'pessoas.')
+                print('   - Foram cadastradas ao todo', f'\033[{verde}m{len(dados)}\033[m', 'pessoas.')
                 print('-'*10, 'IDADES', '-'*10)
                 analise_idades(dados)
-                print(Fore.RESET + '-' * 10, 'GÊNEROS', '-' * 10)
+                print('-' * 10, 'GÊNEROS', '-' * 10)
                 analise_genero(dados)
-                print(Fore.RESET + '-' * 10, 'IDADES + GÊNEROS', '-' * 10)
+                print('-' * 10, 'IDADES + GÊNEROS', '-' * 10)
                 analise_idade_generos(dados)
         case 4:
             titulo('SAINDO...', 30, '-', roxo, False)

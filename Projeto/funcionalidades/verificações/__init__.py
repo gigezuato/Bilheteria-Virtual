@@ -1,3 +1,6 @@
+from funcionalidades.interface import vermelho
+
+
 def limitar_caracteres(prompt, tamanho):
     """
         => Verifica se o texto digitado tem a mesma quantidade de caracteres passados de parâmetro.
@@ -11,8 +14,9 @@ def limitar_caracteres(prompt, tamanho):
         if len(texto_sem_espacos) == tamanho:
             return texto_sem_espacos
         else:
-            print(f'Erro: Você digitou {len(texto_sem_espacos)} caracteres. O texto deve ter {tamanho} caracteres. '
-                  f'Tente novamente! ')
+            print(f'\033[{vermelho}mErro: Você digitou {len(texto_sem_espacos)} caracteres. O texto deve ter {tamanho} '
+                  f'caracteres. '
+                  f'Tente novamente!\033[m')
 
 
 def validar_nome(prompt):
@@ -28,7 +32,7 @@ def validar_nome(prompt):
         if len(nome) > 2 and len(nome_divisao) > 1:
             return nome
         else:
-            print('Erro: nome não válido. Certifique-se de colocar nome e sobrenome!')
+            print(f'\033[{vermelho}mErro: nome não válido. Certifique-se de colocar nome e sobrenome!\033[m')
 
 
 def validar_idade(prompt):
@@ -42,7 +46,8 @@ def validar_idade(prompt):
         if idade > 0:
             return idade
         else:
-            print(f'Erro: Você digitou {idade}. A idade deve ser um valor positivo. Tente novamente! ')
+            print(f'\033[{vermelho}mErro: Você digitou {idade}. A idade deve ser um valor positivo. Tente '
+                  f'novamente!\033[m')
 
 
 def validar_genero(prompt):
@@ -57,8 +62,8 @@ def validar_genero(prompt):
         if genero in 'FMO':
             return genero
         else:
-            print(f'Erro: Opção inválida! Você digitou {genero} e as opções são: '
-                  f'Feminino [F] / Masculino [M] / Outro [O]. Tente novamente!')
+            print(f'\033[{vermelho}mErro: Opção inválida! Você digitou {genero} e as opções são: '
+                  f'Feminino [F] / Masculino [M] / Outro [O]. Tente novamente!\033[{vermelho}m')
 
 
 def validar_estado(prompt):
@@ -77,7 +82,7 @@ def validar_estado(prompt):
             if estado in siglas:
                 return estado
 
-        print(f'Erro: o estado {estado} não existe. Tente novamente!')
+        print(f'\033[{vermelho}mErro: o estado {estado} não existe. Tente novamente!\033[m')
 
 
 def validar_email(prompt):
@@ -91,4 +96,4 @@ def validar_email(prompt):
         if '@' and '.' in email:
             return email
         else:
-            print('Erro: esse não é um e-mail válido. Tente novamente!')
+            print(f'\033[{vermelho}mErro: esse não é um e-mail válido. Tente novamente!\033[m')

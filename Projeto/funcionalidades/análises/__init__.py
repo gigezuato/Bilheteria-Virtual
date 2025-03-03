@@ -1,4 +1,4 @@
-from colorama import Fore
+from funcionalidades.interface import *
 
 
 def analise_idades(dado):
@@ -27,14 +27,14 @@ def analise_idades(dado):
     por_maior = (maior_idade / len(dado.keys())) * 100
     por_menor = (menor_idade / len(dado.keys())) * 100
 
-    print(f'  - Porcentagem de pessoas', Fore.GREEN + 'menores de idade', Fore.RESET + f'cadastradas:',
-          Fore.GREEN + f'{por_menor:.1f} %')
-    print(Fore.RESET + '  - Porcentagem de pessoas', Fore.GREEN + 'maiores de idade', Fore.RESET + 'cadastradas:',
-          Fore.GREEN + f'{por_maior:.1f} %')
-    print(Fore.RESET + '  - A ', Fore.GREEN + 'menor ', Fore.RESET + 'idade cadastrada foi: ',
-          Fore.GREEN + f'{menor}')
-    print(Fore.RESET + '  - A ', Fore.GREEN + 'maior ',
-          Fore.RESET + 'idade cadastrada foi: ', Fore.GREEN + f'{maior}')
+    print(f'  - Porcentagem de pessoas', f'\033[{verde}m menores de idade\033[m', 'cadastradas:',
+          f'\033[{verde}m{por_menor:.1f} %\033[m')
+    print('  - Porcentagem de pessoas', f'\033[{verde}m maiores de idade\033[m', 'cadastradas:',
+          f'\033[{verde}m{por_maior:.1f} %\033[m')
+    print('  - A ', f'\033[{verde}m menor \033[m', 'idade cadastrada foi: ',
+          f'\033[{verde}m{menor}\033[m')
+    print('  - A ', f'\033[{verde}m maior \033[m',
+          'idade cadastrada foi: ', f'\033[{verde}m{maior}\033[m')
 
 
 def analise_genero(dado):
@@ -55,12 +55,12 @@ def analise_genero(dado):
     porc_masc = (masculino / len(dado.keys())) * 100
     porc_out = (outro / len(dado.keys())) * 100
 
-    print('   - Porcentagem de pessoas do gênero', Fore.GREEN + 'feminino', Fore.RESET + 'cadastradas:',
-          Fore.GREEN + f'{porc_fem:.1f} %')
-    print(Fore.RESET + '   - Porcentagem de pessoas do gênero', Fore.GREEN + 'masculino', Fore.RESET + 'cadastradas:',
-          Fore.GREEN + f'{porc_masc:.1f} %')
-    print(Fore.RESET + '   - Porcentagem de pessoas do gênero', Fore.GREEN + 'outro', Fore.RESET + 'cadastradas:',
-          Fore.GREEN + f'{porc_out:.1f} %')
+    print('   - Porcentagem de pessoas do gênero', f'\033[{verde}mfeminino\033[m', 'cadastradas:',
+          f'\033[{verde}m{porc_fem:.1f} %\033[m')
+    print('   - Porcentagem de pessoas do gênero', f'\033[{verde}m masculino\033[m', 'cadastradas:',
+          f'\033[{verde}m{porc_masc:.1f} %\033[m')
+    print('   - Porcentagem de pessoas de', f'\033[{verde}moutro\033[m', 'gênero cadastradas:',
+          f'\033[{verde}m{porc_out:.1f} %\033[m')
 
 
 def analise_idade_generos(dado):
@@ -93,13 +93,11 @@ def analise_idade_generos(dado):
     porc_masc_maior = (masc_maior / cont_masc) * 100
     porc_masc_menor = (masc_menor / cont_masc) * 100
 
-    print('   - Porcentagem de pessoas do gênero', Fore.GREEN + 'feminino maiores de idade',
-          Fore.RESET + 'cadastradas:',
-          Fore.GREEN + f'{porc_fem_maior:.2f} %')
-    print(Fore.RESET + '   - Porcentagem de pessoas do gênero', Fore.GREEN + 'feminino menores de idade', Fore.RESET +
-          'cadastradas:', Fore.GREEN + f'{porc_fem_menor:.2f} %')
-    print(Fore.RESET + '   - Porcentagem de pessoas do gênero', Fore.GREEN + 'masculino maiores de idade', Fore.RESET +
-          'cadastradas:', Fore.GREEN + f'{porc_masc_maior:.2f} %')
-    print(Fore.RESET + '   - Porcentagem de pessoas do gênero', Fore.GREEN + 'masculino menores de idade', Fore.RESET +
-          'cadastradas:', Fore.GREEN + f'{porc_masc_menor:.2f} %')
-
+    print('   - Porcentagem de pessoas do gênero', f'\033[{verde}mfeminino maiores de idade\033[m',
+          'cadastradas:', f'\033[{verde}m{porc_fem_maior:.2f} %\033[m')
+    print('   - Porcentagem de pessoas do gênero', f'\033[{verde}mfeminino menores de idade\033[m',
+          'cadastradas:', f'\033[{verde}m{porc_fem_menor:.2f} %\033[m')
+    print('   - Porcentagem de pessoas do gênero', f'\033[{verde}m masculino maiores de idade\033[m',
+          'cadastradas:', f'\033[{verde}m{porc_masc_maior:.2f} %\033[m')
+    print('   - Porcentagem de pessoas do gênero', f'\033[{verde}m masculino menores de idade\033[m',
+          'cadastradas:', f'\033[{verde}m{porc_masc_menor:.2f} %\033[m')
