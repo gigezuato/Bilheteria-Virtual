@@ -1,4 +1,5 @@
 from funcionalidades.interface import *
+from menu import cadastro
 
 
 def analise_idades(dado):
@@ -106,3 +107,29 @@ def analise_idade_generos(dado):
               'cadastradas:', f'\033[{verde}m{porc_masc_menor:.2f} %\033[m')
     else:
         print('   - Não foram cadastradas pessoas do gênero masculino.')
+
+
+def analise_regioes(dado):
+    cont_sud = cont_sul = cont_nord = cont_nort = cont_cent = 0
+    cadastros_regioes = []
+    for n, i in dado.items():
+        if i['Estado'] in ['SP', 'MG', 'ES', 'RJ']:
+            cont_sud += 1
+        elif i['Estado'] in ['RS', 'PR', 'SC']:
+            cont_sul += 1
+        elif i['Estado'] in ['MA', 'PI', 'CE', 'RN', 'PB', 'PE', 'AL', 'SE', 'BA']:
+            cont_nord += 1
+        elif i['Estado'] in ['AM', 'RR', 'AP', 'PA', 'TO', 'RO', 'AC']:
+            cont_nort += 1
+        else:
+            cont_cent += 1
+    cadastros_regioes.append(cont_sud)
+    cadastros_regioes.append(cont_sul)
+    cadastros_regioes.append(cont_nort)
+    cadastros_regioes.append(cont_nord)
+    cadastros_regioes.append(cont_cent)
+
+    cadastros_regioes_ordem = cadastros_regioes.sort()
+
+
+
