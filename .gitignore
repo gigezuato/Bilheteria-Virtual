@@ -1,6 +1,6 @@
-
 Projeto/.idea/Bilheteria Virtual.iml
 *.xml
 Projeto/teste1.py
 Projeto/teste2.py
 *.pyc
+.idea/
